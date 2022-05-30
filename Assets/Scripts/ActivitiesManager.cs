@@ -34,8 +34,16 @@ public class ActivitiesManager : Singleton<ActivitiesManager>
             return;
         }
 
+        if (_currentActivity == activity)
+        {
+            AssignCurrentActivity(null);
+            activity.onStopped?.Invoke();
+            return;
+        }
+
         if (activity.CanActivate())
         {
+            activity.onActive?.Invoke();
             AssignCurrentActivity(activity);
         }
     }

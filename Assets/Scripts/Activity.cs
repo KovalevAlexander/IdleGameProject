@@ -8,11 +8,23 @@ public abstract class Activity : MonoBehaviour
     [SerializeField] protected ResourceCosts Costs;
     [SerializeField] protected ResourceCosts Production;
 
+    [SerializeField] private ActivityRepresentation Representation;
+
+
     public Action<Activity> onPressed;
+    public Action onActive;
+    public Action onStopped;
 
     private void OnEnable()
     {
         ActivitiesManager.Instance.RegisterActivity(this);
+
+        if (Representation is not null)
+        {
+            Representation.UpdateWithNormalColor();
+            onStopped = Representation.UpdateWithNormalColor;
+            onActive = Representation.UpdateWithActiveColor;
+        }
     }
 
     private void OnDisable()
@@ -25,6 +37,7 @@ public abstract class Activity : MonoBehaviour
         if (!CanActivate())
         {
             ActivitiesManager.Instance.AssignCurrentActivity(null);
+            onStopped?.Invoke();
             return;
         }
     }
