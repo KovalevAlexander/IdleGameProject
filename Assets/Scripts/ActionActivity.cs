@@ -12,16 +12,17 @@ public class ActionActivity : Activity
 
         foreach (var resource in resourceTypes)
         {
-            ResourcesManager.Instance.GetResource(resource).Substract(Costs[resource]);
+            ResourcesManager.Instance.DecreseResource(resource, Costs[resource]);
         }
 
         resourceTypes = Production.GetResourceTypes();
 
         foreach (var resource in resourceTypes)
         {
-            ResourcesManager.Instance.GetResource(resource).Add(Production[resource]);
+            ResourcesManager.Instance.IncreaseResource(resource, Production[resource]);
         }
 
         ActivitiesManager.Instance.AssignCurrentActivity(null);
+        onStopped?.Invoke();
     }
 }

@@ -9,6 +9,7 @@ public class ActivityRepresentation : MonoBehaviour
 
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color activeColor = Color.red;
+    [SerializeField] private Color disabledColor = Color.grey;
 
     public void UpdateWithNormalColor()
     {
@@ -18,6 +19,11 @@ public class ActivityRepresentation : MonoBehaviour
     public void UpdateWithActiveColor()
     {
         UpdateRepresentation(activeColor);
+    }
+
+    public void UpdateWithDisabledColor()
+    {
+        UpdateRepresentation(disabledColor);
     }
 
     private void UpdateRepresentation(Color color)

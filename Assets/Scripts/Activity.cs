@@ -14,6 +14,18 @@ public abstract class Activity : MonoBehaviour
     public Action<Activity> onPressed;
     public Action onActive;
     public Action onStopped;
+    public Action onUnavailable;
+    public Action onAvailable;
+
+    private void Awake()
+    {
+#if UNITY_EDITOR
+        if (Costs is null || Production is null)
+        {
+            Debug.LogError("Pleasu ensure that the " + gameObject.name + " activity has been set up correctly!", gameObject);
+        }
+#endif
+    }
 
     private void OnEnable()
     {
@@ -21,15 +33,24 @@ public abstract class Activity : MonoBehaviour
 
         if (Representation is not null)
         {
-            Representation.UpdateWithNormalColor();
-            onStopped = Representation.UpdateWithNormalColor;
+            onStopped = Representation.UpdateWithDisabledColor;
             onActive = Representation.UpdateWithActiveColor;
+            onUnavailable = Representation.UpdateWithDisabledColor;
+            onAvailable = Representation.UpdateWithNormalColor;
+
+            CanActivate(); //To update the UI
         }
+
+        ResourcesManager.Instance.onResourcesUpdated += HandleResourceUpdate;
     }
 
     private void OnDisable()
     {
-        //ActivitiesManager.Instance.RemoveActivity(this);
+#if !UNITY_EDITOR
+        ActivitiesManager.Instance.RemoveActivity(this);
+
+        ResourcesManager.Instance.onResourcesUpdated -= HandleResourceUpdate;
+#endif
     }
 
     public virtual void Run()
@@ -44,20 +65,39 @@ public abstract class Activity : MonoBehaviour
 
     public void OnPressed()
     {
-        onPressed.Invoke(this);
+        onPressed?.Invoke(this);
     }
 
     public virtual bool CanActivate()
     {
         var requiredResources = Costs.GetResourceTypes();
+
         foreach (var resource in requiredResources)
         {
             if (ResourcesManager.Instance.GetResource(resource).Value < Costs[resource])
             {
+                onUnavailable?.Invoke();
                 return false;
-            }
-                
+            }   
         }
-        return true;
+
+        requiredResources = Production.GetResourceTypes();
+
+        foreach (var resource in requiredResources)
+        {
+            if (!ResourcesManager.Instance.GetResource(resource).Maxed)
+            {
+                onAvailable?.Invoke();
+                return true;
+            }
+        }
+
+        onUnavailable?.Invoke();
+        return false;
+    }
+
+    private void HandleResourceUpdate()
+    {
+        CanActivate();
     }
 }

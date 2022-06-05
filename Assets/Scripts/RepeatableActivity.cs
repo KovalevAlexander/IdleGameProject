@@ -12,14 +12,16 @@ public class RepeatableActivity : Activity
 
         foreach (var resource in resourceTypes)
         {
-            ResourcesManager.Instance.GetResource(resource).Substract(Costs[resource] * Time.deltaTime);
+            ResourcesManager.Instance.DecreseResource(resource, Costs[resource] * Time.deltaTime);
+            //ResourcesManager.Instance.GetResource(resource).Substract(Costs[resource] * Time.deltaTime);
         }
 
         resourceTypes = Production.GetResourceTypes();
 
         foreach (var resource in resourceTypes)
         {
-            ResourcesManager.Instance.GetResource(resource).Add(Production[resource] * Time.deltaTime) ;
+            ResourcesManager.Instance.IncreaseResource(resource, Production[resource] * Time.deltaTime);
+            //ResourcesManager.Instance.GetResource(resource).Add(Production[resource] * Time.deltaTime) ;
         }
     }
 
@@ -30,10 +32,12 @@ public class RepeatableActivity : Activity
         {
             if (ResourcesManager.Instance.GetResource(resource).Value < (Costs[resource] * Time.deltaTime))
             {
+                onUnavailable?.Invoke();
                 return false;
             }
 
         }
+        onAvailable?.Invoke();
         return true;
     }
 }

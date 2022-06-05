@@ -39,6 +39,14 @@ public class Resource : ScriptableObject
         }
     }
 
+    public bool Maxed
+    {
+        get
+        {
+            return Value >= _maxValue;
+        }
+    }
+
     private float _currentValue;
     private float _maxValue;
 
