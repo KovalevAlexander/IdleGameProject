@@ -1,20 +1,26 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 using UnityEngine;
 
 using RotaryHeart.Lib.SerializableDictionary;
-public sealed class ResourcesManager : Representer<Resource>
+
+public sealed class ResourcesManager : Singleton<ResourcesManager>
 {
     [Header("General")]
     [SerializeField] private ResourcesDictionary Resources = new();
 
+    [Header("UI")]
+    [SerializeField] private GameObject uiPrefab;
+    [SerializeField] private Transform uiRoot;
+
     public Action onResourcesUpdated;
+
+    private readonly ResourceRepresenter m_Representer = new();
 
     private void Start()
     {
-        CreateRepresentations();
+        m_Representer.CreateRepresentations(Resources.Values.ToArray(), uiPrefab, uiRoot);
     }
 
     public Resource GetResource(ResourceType type)
@@ -34,16 +40,6 @@ public sealed class ResourcesManager : Representer<Resource>
         onResourcesUpdated?.Invoke();
     }
 
-    protected override void CreateRepresentations()
-    {
-        var representables = Resources.Values.ToList<IRepresentable>();
-
-        foreach (var representable in representables)
-        {
-            var representation = RepresentationFactory<ResourceRepresentation>.Get(representable, UIPrefab, UIRoot, colorData);
-            m_Representations.Add(representation);
-        }
-    }
 }
 
 [System.Serializable]

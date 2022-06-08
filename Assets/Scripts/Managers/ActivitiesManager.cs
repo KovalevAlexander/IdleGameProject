@@ -4,17 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using RotaryHeart.Lib.SerializableDictionary;
-public sealed class ActivitiesManager : Representer<Activity>
-{
-    [SerializeField] ActivityRootsDictionary UIRoots = new();
 
+public sealed class ActivitiesManager : Singleton<ActivitiesManager>
+{
+    [Header("UI")]
+    [SerializeField] ActivityRootsDictionary uiRoots = new();
+    [SerializeField] GameObject uiPrefab;
+
+    private readonly ActivitiesRepresenter m_Representer = new();
     private List<Activity> m_Activities = new();
+
     private Activity m_CurrentActivity;
 
     private void OnEnable()
     {
-        var TM = TravelMananger.Instance as TravelMananger;
-        TM.onLocationChange = RegisterActivities;
+        TravelMananger.Instance.onLocationChange = RegisterActivities;
     }
 
 #if !UNITY_EDITOR
@@ -24,30 +28,34 @@ public sealed class ActivitiesManager : Representer<Activity>
     }
 #endif
 
+    private void Update()
+    {
+        m_CurrentActivity?.Run();
+    }
+
     private void RegisterActivities(ActivitiesList activities)
     {
         m_Activities.Clear();
+        m_Representer.Clear();
 
         foreach (ActivityData activityData in activities.ToList())
         {
             var activity = ActivityFactory.Get(activityData);
             activity.onPressed = HandleActivityPressed;
+
             m_Activities.Add(activity);
         }
 
-        CreateRepresentations();
+        m_Representer.CreateRepresentations(m_Activities.ToArray(), uiPrefab, ResolveRoots());
     }
-    protected override void CreateRepresentations()
+    private Transform[] ResolveRoots()
     {
-        foreach (var representable in m_Activities)
-        {
-            if (!m_Representations.Contains(representable.Representation))
-            {
-                var representation = RepresentationFactory<ActivityRepresentation>.Get(representable, UIPrefab, UIRoots[representable.Type], colorData);
-                m_Representations.Add(representation);
-            }
+        var array = new Transform[m_Activities.Count];
 
-        }
+        for (int i = 0; i < array.Length; i++)
+            array[i] = uiRoots[m_Activities[i].Type];
+
+        return array;
     }
 
     public void AssignCurrentActivity(Activity activity)
@@ -58,27 +66,31 @@ public sealed class ActivitiesManager : Representer<Activity>
     private void HandleActivityPressed(Activity activity)
     {
         if (!m_Activities.Contains(activity))
-        {
             return;
-        }
 
         if (m_CurrentActivity == activity)
         {
-            AssignCurrentActivity(null);
-            activity.onStopped?.Invoke();
+            StopActivity(activity);
             return;
         }
 
-        if (activity.CanActivate())
-        {
-            activity.onActive?.Invoke();
-            AssignCurrentActivity(activity);
-        }
+        if (activity.IsAvailable())
+            ActivateActivity(activity);
     }
 
-    private void Update()
+    public void StopActivity(Activity activity)
     {
-        m_CurrentActivity?.Run();
+        if (activity == m_CurrentActivity)
+        {
+            AssignCurrentActivity(null);
+            activity.onStopped?.Invoke();
+        }
+    }
+    
+    private void ActivateActivity(Activity activity)
+    {
+        activity.onActivated?.Invoke();
+        AssignCurrentActivity(activity);
     }
 }
 

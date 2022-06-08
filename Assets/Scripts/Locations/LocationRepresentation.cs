@@ -1,9 +1,17 @@
 using UnityEngine;
 
-public class LocationRepresentation : Representation<Location>
+using TMPro;
+
+public class LocationRepresentation : ClickableRepresentation<Location>
 {
-    public LocationRepresentation(Location representable, GameObject UIObject, RepresentationColorData colorData) : base(representable, UIObject, colorData)
+    private TMP_Text m_Text;
+
+    public LocationRepresentation(Location representable, GameObject uiObject, string textFormat) : base(representable, uiObject, textFormat)
     {
+        m_TextFormat = "{0}";
+
+        m_Text = uiObject.GetComponentInChildren<TMP_Text>();
+
         UpdateRepresentation();
     }
 

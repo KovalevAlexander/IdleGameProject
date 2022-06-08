@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
 
-public interface IRepresentation
+public interface IRepresentation : IDisposable
 {
     public IRepresentable Owner { get; }
+    public GameObject UIObject { get; }
 }

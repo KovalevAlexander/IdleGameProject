@@ -4,15 +4,28 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/Resources/Resource")]
 public class Resource : ScriptableObject, IRepresentable
 {
+    [Header("General")]
     [SerializeField] private ResourceType m_Type;
 
     [SerializeField] private float initialMaxValue;
     [SerializeField] private float initialValue;
 
+    [Header("UI")]
+    [SerializeField] private RepresentationColorData m_ColorData;
+
     public Action<float> onValueChanged;
     public Action<float> onMaxChanged;
 
     private ResourceRepresentation m_Representation;
+
+    private float _currentValue;
+    private float _maxValue;
+
+    private void Awake()
+    {
+        _currentValue = initialValue;
+        _maxValue = initialMaxValue;
+    }
 
     public ResourceType Type
     {
@@ -53,8 +66,7 @@ public class Resource : ScriptableObject, IRepresentable
         set => m_Representation = value as ResourceRepresentation; 
     }
 
-    private float _currentValue;
-    private float _maxValue;
+    public RepresentationColorData ColorData => m_ColorData;
 
     public void Add(float value)
     {

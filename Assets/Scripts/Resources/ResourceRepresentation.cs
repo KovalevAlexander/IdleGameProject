@@ -3,25 +3,32 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class ResourceRepresentation : Representation<Resource>
+using TMPro;
+
+public sealed class ResourceRepresentation : TextRepresentation<Resource>
 {
     private readonly StringBuilder m_SB = new();
     private readonly Slider m_Slider;
-    private readonly TMPro.TMP_Text m_CounterText;
+
+    private readonly TMP_Text m_Header;
+    private readonly TMP_Text m_Counter;
 
     private float m_Current;
     private float m_Max;
 
-    public ResourceRepresentation(Resource representable, GameObject UIObject, RepresentationColorData colorData) : base(representable, UIObject, colorData)
+    public ResourceRepresentation(Resource representable, GameObject uiObject, string textFormat) : base(representable, uiObject, textFormat)
     {
-        var texts = UIObject.GetComponentsInChildren<TMPro.TMP_Text>();
-        m_CounterText = texts[0];
-        m_Text = texts[1];
-        m_Text.text = representable.Name;
+        m_TextFormat = "{0:0.##} / {1:0.##}";
 
-        m_TextFormat = "{0} / {1}";
-        m_Slider = UIObject.GetComponentInChildren<Slider>();
-        m_Slider.colors = colorData.Colors;
+        var refs = uiObject.GetComponent<ResourceRepresentationSlider>();
+
+        m_Header = refs.Header;
+        m_Counter = refs.Counter;
+
+        m_Header.text = representable.Name;
+
+        m_Slider = refs.Slider;
+        refs.Image.color = Owner.ColorData.DefaultColor;
 
         m_Current = representable.Value;
         m_Max = representable.Maximum;
@@ -35,9 +42,11 @@ public sealed class ResourceRepresentation : Representation<Resource>
     public override void UpdateRepresentation()
     {
         m_SB.Clear();
-        m_SB.AppendFormat(m_TextFormat, m_Current.ToString("0.00"), m_Max.ToString("0.00"));
 
-        m_CounterText.text = m_SB.ToString();
+       
+        m_SB.AppendFormat(m_TextFormat, m_Current, m_Max);
+
+        m_Counter.text = m_SB.ToString();
         m_Slider.value = m_Current;
     }
 

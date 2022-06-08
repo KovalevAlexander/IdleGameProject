@@ -10,7 +10,7 @@ public class RepresentationColorData : ScriptableObject
     [SerializeField] private Color disabledColor;
 
     public ColorBlock Colors => colors;
-    public Color Default => defaultCollor;
-    public Color Activated => activatedColor;
-    public Color Disabled => disabledColor;
+    public Color DefaultColor => defaultCollor;
+    public Color ActivatedColor => activatedColor;
+    public Color DisabledColor => disabledColor;
 }

@@ -9,9 +9,12 @@ public class ActivityData : ScriptableObject
     [Header("Activity Effects")]
     [SerializeField] private ActivityRequirements requirements;
     [SerializeField] private ActivityProduction production;
+    [Header("UI")]
+    [SerializeField] private RepresentationColorData colorData;
 
     public string Name => activityName;
     public ActivityType Type => activityType;
     public ActivityRequirements Requirements => requirements;
     public ActivityProduction Production => production;
+    public RepresentationColorData ColorData => colorData;
 }

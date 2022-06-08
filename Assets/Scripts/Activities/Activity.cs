@@ -1,10 +1,9 @@
 using System;
-using UnityEngine;
 
 public abstract class Activity : IRepresentable
 {
     public Action<Activity> onPressed;
-    public Action onActive;
+    public Action onActivated;
     public Action onStopped;
     public Action onUnavailable;
     public Action onAvailable;
@@ -19,22 +18,21 @@ public abstract class Activity : IRepresentable
         get => m_Representation;
         set => m_Representation = value as ActivityRepresentation;
     }
+
+    public RepresentationColorData ColorData => m_Data.ColorData;
+
     public Activity(ActivityData data)
     {
         m_Data = data;
 
-        var RM = ResourcesManager.Instance as ResourcesManager;
-        RM.onResourcesUpdated += HandleResourceUpdate;
-
+        ResourcesManager.Instance.onResourcesUpdated += HandleResourceUpdate;
     }
 
     public virtual void Run()
     {
-        if (!CanActivate())
+        if (!IsAvailable())
         {
-            var AM = ActivitiesManager.Instance as ActivitiesManager;
-            AM.AssignCurrentActivity(null);
-            onStopped?.Invoke();
+            ActivitiesManager.Instance.StopActivity(this);
             return;
         }
     }
@@ -44,13 +42,19 @@ public abstract class Activity : IRepresentable
         onPressed?.Invoke(this);
     }
 
-    public virtual bool CanActivate()
+    public virtual bool IsAvailable()
     {
-        return false;
+        return m_Data.Requirements.AreMet && m_Data.Production.CanProduce;
     }
 
     private void HandleResourceUpdate()
     {
-        CanActivate();
+        //Race With Active
+        if (IsAvailable())
+        {
+            onAvailable?.Invoke();
+        }
+        else
+            onUnavailable?.Invoke();
     }
 }

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activityName: Rest
   activityType: 1
-  requirements: {fileID: 11400000, guid: 27b8684ea3c32354fa7f65c79e725036, type: 2}
-  production: {fileID: 0}
+  requirements: {fileID: 11400000, guid: 79b26b685829f224a929da0259fd343a, type: 2}
+  production: {fileID: 11400000, guid: 2b521a7c45655dc41a0dc7ab2796e082, type: 2}
+  colorData: {fileID: 11400000, guid: 8480f909b6dd09647921f90392f765d4, type: 2}

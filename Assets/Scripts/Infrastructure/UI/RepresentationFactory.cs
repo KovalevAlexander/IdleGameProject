@@ -1,46 +1,30 @@
 using System;
+using System.Reflection;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public static class RepresentationFactory<T> where T : IRepresentation
 {
-    private static readonly Dictionary<Type, Func<IRepresentable, GameObject, RepresentationColorData, IRepresentation>> m_FactoryDictionary = new()
+    private static readonly Dictionary<Type, Type> m_FactoryDictionary = new()
     {
-        { typeof(Resource), ResourceRepresentation },
-        { typeof(Location), LocationRepresentation },
-        { typeof(Activity), ActivityRepresentation }
+        { typeof(Resource), typeof(ResourceRepresentation) },
+        { typeof(Location), typeof(LocationRepresentation) },
+        { typeof(Activity), typeof(ActivityRepresentation) }
     };
 
-    public static T Get(IRepresentable representable, GameObject uiPrefab, Transform root, RepresentationColorData colorData)
+    public static T Get(IRepresentable representable, GameObject uiPrefab, Transform root)
     {
-        var UIGameObject = GameObject.Instantiate<GameObject>(uiPrefab, root);
-        UIGameObject.name = representable.Name;
+        var uiGameObject = GameObject.Instantiate<GameObject>(uiPrefab, root);
+        uiGameObject.name = representable.Name;
 
         var key = representable.GetType();
-        IRepresentation representation;
+        var param = new object[] { representable, uiGameObject, "" };
+
         if (m_FactoryDictionary.ContainsKey(key))
         {
-            representation = m_FactoryDictionary[key](representable, UIGameObject, colorData);
+            return (T)Activator.CreateInstance(m_FactoryDictionary[key], param);
         }
-        else representation = m_FactoryDictionary[key.BaseType](representable, UIGameObject, colorData); ;
-
-        representable.Representation = representation;
-        return (T)representation;
+        else return (T)Activator.CreateInstance(m_FactoryDictionary[key.BaseType], param);
     }
-
-    private static IRepresentation ResourceRepresentation(IRepresentable representable, GameObject UIGameObject, RepresentationColorData colorData)
-    {
-        return new ResourceRepresentation(representable as Resource, UIGameObject, colorData);
-    }
-
-    private static IRepresentation LocationRepresentation(IRepresentable representable, GameObject UIGameObject, RepresentationColorData colorData)
-    {
-        return new LocationRepresentation(representable as Location, UIGameObject, colorData);
-    }
-
-    private static IRepresentation ActivityRepresentation(IRepresentable representable, GameObject UIGameObject, RepresentationColorData colorData)
-    {
-        return new ActivityRepresentation(representable as Activity, UIGameObject, colorData);
-    }
-
 }

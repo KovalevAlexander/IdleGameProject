@@ -2,22 +2,32 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class TravelMananger : Representer<Location>
+public sealed class TravelMananger : Singleton<TravelMananger>
 {
     [Header("General")]
     [SerializeField] private Location defaultLocation;
     [SerializeField] private List<Location> locations = new();
 
-    
+    [Header("UI")]
+    [SerializeField] Transform uiRoot;
+    [SerializeField] GameObject uiPrefab;
+
     public Action<ActivitiesList> onLocationChange;
+
+    private readonly LocationsRepresenter m_Representer = new();
 
     private Location m_CurrentLocation;
 
     private void Start()
     {
         ChangeLocation(defaultLocation);
-        CreateRepresentations();
+        m_Representer.CreateRepresentations(locations.ToArray(), uiPrefab, uiRoot);
+
+        foreach (var representation in m_Representer.GetRepresentations())
+            representation.onClicked = ChangeLocation;
     }
+
+
 
     public void ChangeLocation(Location location)
     {
@@ -27,18 +37,5 @@ public sealed class TravelMananger : Representer<Location>
         m_CurrentLocation = location;
 
         onLocationChange?.Invoke(m_CurrentLocation.GetActivitiesList());
-    }
-
-    protected override void CreateRepresentations()
-    {
-        var representables = locations;
-
-        foreach (var representable in representables)
-        {
-            var representation = RepresentationFactory<LocationRepresentation>.Get(representable, UIPrefab, UIRoot, colorData);
-            representation.onClicked = ChangeLocation;
-
-            m_Representations.Add(representation);
-        }
     }
 }

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Energy
   m_EditorClassIdentifier: 
   m_Type: 0
-  resourceUIPrefab: {fileID: 5852005573281867321, guid: 8295c608eca75d745b26658e1478655c,
-    type: 3}
   initialMaxValue: 10
   initialValue: 0
+  m_ColorData: {fileID: 11400000, guid: d6ca5748595b07d41886884d80e04b38, type: 2}

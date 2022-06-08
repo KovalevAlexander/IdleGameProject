@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationName: Test1
   Activities: {fileID: 11400000, guid: c9c9a70877ffc714bbba7a5d99197155, type: 2}
+  colorData: {fileID: 11400000, guid: 8480f909b6dd09647921f90392f765d4, type: 2}
