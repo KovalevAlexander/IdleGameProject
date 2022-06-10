@@ -44,7 +44,7 @@ public abstract class Activity : IRepresentable
 
     public virtual bool IsAvailable()
     {
-        return m_Data.Requirements.AreMet && m_Data.Production.CanProduce;
+        return m_Data.Requirements.CanApply() && m_Data.Production.CanApply();
     }
 
     private void HandleResourceUpdate()

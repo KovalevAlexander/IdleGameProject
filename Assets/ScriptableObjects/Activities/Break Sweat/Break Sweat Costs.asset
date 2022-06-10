@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c8fe78b3e0e1442b50b11d28b5c46d, type: 3}
   m_Name: Break Sweat Costs
   m_EditorClassIdentifier: 
-  Costs:
+  perSecond: 1
+  affectedResources:
     reorderableList:
       canAdd: 1
       canRemove: 1
@@ -39,4 +40,3 @@ MonoBehaviour:
     _keys: 00000000
     _values:
     - 1
-  perSecond: 1

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5d9f63e325bfd4fa725bc64a3fe47d, type: 3}
   m_Name: Rest Production
   m_EditorClassIdentifier: 
-  production:
+  perSecond: 0
+  affectedResources:
     reorderableList:
       canAdd: 1
       canRemove: 1

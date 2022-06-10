@@ -23,10 +23,12 @@ public sealed class ResourcesManager : Singleton<ResourcesManager>
         m_Representer.CreateRepresentations(Resources.Values.ToArray(), uiPrefab, uiRoot);
     }
 
-    public Resource GetResource(ResourceType type)
-    {
-        return Resources[type];
-    }
+    private Resource GetResource(ResourceType type) => Resources[type];
+
+    public bool ResourceHasMoreOrEqual(ResourceType type, float value) => GetResource(type).Value >= value;
+
+    public bool ResourceFilled(ResourceType type) => Resources[type].isFull;
+
 
     public void IncreaseResource(ResourceType type, float value)
     {

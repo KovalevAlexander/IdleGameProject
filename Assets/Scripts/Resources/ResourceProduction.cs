@@ -1,32 +1,22 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Activities/Resource Production")]
-public class ResourceProduction : ActivityProduction
+[CreateAssetMenu(menuName = "Game/Effects/Resources/Resource Production")]
+public sealed class ResourceProduction : ResourceEffect
 {
-    [SerializeField] private ResourceDictionary production;
-
-    public override bool CanProduce => Check();
-
-    private bool Check()
+    public override bool CanApply()
     {
-        var RM = ResourcesManager.Instance;
-
-        foreach (var resource in production.Keys)
-        {
-            if (RM.GetResource(resource).Maxed)
-            {
+        foreach (var resourceType in GetResourceTypes())
+            if (m_RM.ResourceFilled(resourceType))
                 return false;
-            }
-        }
 
         return true;
     }
 
-    public float this[ResourceType type]
+    public override void Apply()
     {
-        get
-        {
-            return production[type];
-        }
+        ScaleEffectPerSecond();
+
+        foreach (var resourceType in GetResourceTypes())
+            m_RM.IncreaseResource(resourceType, affectedResources[resourceType]);
     }
 }

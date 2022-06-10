@@ -52,7 +52,7 @@ public class Resource : ScriptableObject, IRepresentable
         }
     }
 
-    public bool Maxed
+    public bool isFull
     {
         get
         {

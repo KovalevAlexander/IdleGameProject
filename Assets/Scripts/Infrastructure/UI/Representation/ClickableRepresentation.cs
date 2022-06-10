@@ -12,7 +12,7 @@ public abstract class ClickableRepresentation<T> : TextRepresentation<T> where T
     public ClickableRepresentation(T representable, GameObject UIObject, string textFormat) : base(representable, UIObject, textFormat)
     {
         m_Button = UIObject.GetComponent<Button>();
-        m_Button.colors = Owner.ColorData.Colors;
+        m_Button.image.color = Owner.ColorData.DefaultColor;
 
 #if UNITY_EDITOR
         if (m_Button == null)
