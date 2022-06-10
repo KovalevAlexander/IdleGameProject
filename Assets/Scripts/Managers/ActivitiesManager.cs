@@ -11,7 +11,7 @@ public sealed class ActivitiesManager : Singleton<ActivitiesManager>
     [SerializeField] ActivityRootsDictionary uiRoots = new();
     [SerializeField] GameObject uiPrefab;
 
-    private readonly ActivitiesRepresenter m_Representer = new();
+    private readonly Representer<Activity, ActivityRepresentation> m_Representer = new();
     private List<Activity> m_Activities = new();
 
     private Activity m_CurrentActivity;

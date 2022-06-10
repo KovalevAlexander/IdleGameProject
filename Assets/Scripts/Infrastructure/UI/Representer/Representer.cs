@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public abstract class Representer<T, K> where T : IRepresentable
-                                        where K : IRepresentation
+public class Representer<T, K> where T : IRepresentable
+                               where K : IRepresentation
 {
     protected List<K> m_Representations = new();
 

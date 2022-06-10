@@ -16,7 +16,7 @@ public sealed class ResourcesManager : Singleton<ResourcesManager>
 
     public Action onResourcesUpdated;
 
-    private readonly ResourceRepresenter m_Representer = new();
+    private readonly Representer<Resource, ResourceRepresentation> m_Representer = new();
 
     private void Start()
     {

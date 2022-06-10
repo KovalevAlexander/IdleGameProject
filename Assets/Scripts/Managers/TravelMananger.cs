@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public sealed class TravelMananger : Singleton<TravelMananger>
@@ -14,7 +15,7 @@ public sealed class TravelMananger : Singleton<TravelMananger>
 
     public Action<ActivitiesList> onLocationChange;
 
-    private readonly LocationsRepresenter m_Representer = new();
+    private readonly Representer<Location, LocationRepresentation> m_Representer = new();
 
     private Location m_CurrentLocation;
 
@@ -26,8 +27,6 @@ public sealed class TravelMananger : Singleton<TravelMananger>
         foreach (var representation in m_Representer.GetRepresentations())
             representation.onClicked = ChangeLocation;
     }
-
-
 
     public void ChangeLocation(Location location)
     {
