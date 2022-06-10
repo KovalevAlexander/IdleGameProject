@@ -29,9 +29,11 @@ public sealed class ResourceRepresentation : TextRepresentation<Resource>
 
         m_Slider = refs.Slider;
         refs.Image.color = Owner.ColorData.DefaultColor;
-
+ 
         m_Current = representable.Value;
         m_Max = representable.Maximum;
+
+        m_Slider.maxValue = m_Max;
 
         representable.onValueChanged = UpdateValue;
         representable.onMaxChanged = UpdateValueBounds;

@@ -12,14 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3282d5a5eb35ec4f815f45f6a95fb7c, type: 3}
   m_Name: Default Color Data
   m_EditorClassIdentifier: 
-  colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.5568628}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0
   defaultCollor: {r: 1, g: 1, b: 1, a: 1}
-  activatedColor: {r: 0.56308967, g: 0.9716981, b: 0.53626734, a: 1}
+  activatedColor: {r: 1, g: 0.37875608, b: 0.24056602, a: 1}
   disabledColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 0.5568628}

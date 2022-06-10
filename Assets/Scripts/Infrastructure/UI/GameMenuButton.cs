@@ -25,9 +25,20 @@ public class GameMenuButton : MonoBehaviour
 #endif
     }
 
+    private void Start()
+    {
+
+        GameMenuManager.Instance.Register(this);
+
+    }
+
     private void OnEnable()
     {
-        GameMenuManager.Instance.Register(this);
+        if (GameMenuManager.IsAlive)
+        {
+            GameMenuManager.Instance.Register(this);
+        }
+
         m_Button.onClick.AddListener(OnClick);
     }
 

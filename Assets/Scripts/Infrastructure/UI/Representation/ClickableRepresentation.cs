@@ -24,7 +24,8 @@ public abstract class ClickableRepresentation<T> : TextRepresentation<T> where T
 
     private void HandleClick()
     {
-        onClicked?.Invoke(m_Owner);
+        if (onClicked != null)
+            onClicked?.Invoke(m_Owner);
     }
 
     public override void Dispose()

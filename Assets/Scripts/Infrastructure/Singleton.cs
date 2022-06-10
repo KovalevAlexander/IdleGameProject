@@ -2,22 +2,70 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
-    private static T instance;
+
+    private static T instance = null;
+
+    private bool alive = true;
 
     public static T Instance
     {
         get
         {
             if (instance != null)
+            {
                 return instance;
+            }
             else
             {
-                return instance = GameObject.FindObjectOfType<T>();
+                //Find T
+                T[] managers = GameObject.FindObjectsOfType<T>();
+                if (managers != null)
+                {
+                    if (managers.Length == 1)
+                    {
+                        instance = managers[0];
+                        DontDestroyOnLoad(instance);
+                        return instance;
+                    }
+                    else
+                    {
+                        if (managers.Length > 1)
+                        {
+                            Debug.LogError($"Have more that one {typeof(T).Name} in scene. " +
+                                            "But this is Singleton! Check project.");
+                            for (int i = 0; i < managers.Length; ++i)
+                            {
+                                T manager = managers[i];
+                                Destroy(manager.gameObject);
+                            }
+                        }
+                    }
+                }
+                //create 
+                GameObject go = new GameObject(typeof(T).Name, typeof(T));
+                instance = go.GetComponent<T>();
+                DontDestroyOnLoad(instance.gameObject);
+                return instance;
             }
         }
+
+        //Can be initialized externally
         set
         {
-            instance = value;
+            instance = value as T;
+        }
+    }
+
+    /// <summary>
+    /// Check flag if need work from OnDestroy or OnApplicationExit
+    /// </summary>
+    public static bool IsAlive
+    {
+        get
+        {
+            if (instance == null)
+                return false;
+            return instance.alive;
         }
     }
 
@@ -27,6 +75,12 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         {
             DontDestroyOnLoad(gameObject);
             instance = this as T;
+        }
+        else
+        {
+            Debug.LogError($"Have more that one {typeof(T).Name} in scene. " +
+                            "But this is Singleton! Check project.");
+            DestroyImmediate(this);
         }
     }
 }

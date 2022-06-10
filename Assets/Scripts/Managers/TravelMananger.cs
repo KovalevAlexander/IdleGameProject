@@ -22,6 +22,7 @@ public sealed class TravelMananger : Singleton<TravelMananger>
     private void Start()
     {
         ChangeLocation(defaultLocation);
+
         m_Representer.CreateRepresentations(locations.ToArray(), uiPrefab, uiRoot);
 
         foreach (var representation in m_Representer.GetRepresentations())

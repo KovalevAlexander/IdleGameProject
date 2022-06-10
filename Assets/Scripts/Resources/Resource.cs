@@ -21,10 +21,10 @@ public class Resource : ScriptableObject, IRepresentable
     private float _currentValue;
     private float _maxValue;
 
-    private void Awake()
+    private void OnEnable()
     {
-        _currentValue = initialValue;
-        _maxValue = initialMaxValue;
+        SetValue(initialValue);
+        Maximum = initialMaxValue;
     }
 
     public ResourceType Type

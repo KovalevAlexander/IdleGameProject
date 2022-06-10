@@ -6,5 +6,8 @@ public sealed class ActionActivity : Activity
 
     public override void Run()
     {
+        base.Run();
+
+        ActivitiesManager.Instance.StopActivity(this);
     }
 }
