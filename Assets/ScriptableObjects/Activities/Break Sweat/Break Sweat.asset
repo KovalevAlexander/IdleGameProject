@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc775da0b44b714196523147858897a, type: 3}
+  m_Name: Break Sweat
+  m_EditorClassIdentifier: 
+  activityName: Break sweat
+  activityType: 0
+  requirements: {fileID: 11400000, guid: e30a41534deab124fb37bd2bdf01368b, type: 2}
+  production: {fileID: 11400000, guid: d118eb8ffdd7c414d8f4991f1bbaa91e, type: 2}
+  colorData: {fileID: 11400000, guid: 8480f909b6dd09647921f90392f765d4, type: 2}

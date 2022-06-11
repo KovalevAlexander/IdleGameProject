@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   m_Type: 1
-  resourceUIPrefab: {fileID: 6348440154418593352, guid: bf8375feb84408c439c5378a5eddc689,
-    type: 3}
   initialMaxValue: 50
   initialValue: 0
+  m_ColorData: {fileID: 11400000, guid: 13ac3f2a98459434aa86c62b4db23291, type: 2}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc775da0b44b714196523147858897a, type: 3}
+  m_Name: Rest
+  m_EditorClassIdentifier: 
+  activityName: Rest
+  activityType: 1
+  requirements: {fileID: 11400000, guid: 79b26b685829f224a929da0259fd343a, type: 2}
+  production: {fileID: 11400000, guid: 2b521a7c45655dc41a0dc7ab2796e082, type: 2}
+  colorData: {fileID: 11400000, guid: 8480f909b6dd09647921f90392f765d4, type: 2}
