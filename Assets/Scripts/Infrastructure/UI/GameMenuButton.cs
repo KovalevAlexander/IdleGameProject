@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class GameMenuButton : MonoBehaviour
+public sealed class GameMenuButton : MonoBehaviour
 {
     [SerializeField] private Canvas canvasToToggle;
 
@@ -25,19 +25,13 @@ public class GameMenuButton : MonoBehaviour
 #endif
     }
 
-    private void Start()
-    {
-
-        GameMenuManager.Instance.Register(this);
-
-    }
+    private void Start() 
+        => ReferenceManager.Instance.GameMenuManager.Register(this);
 
     private void OnEnable()
     {
-        if (GameMenuManager.IsAlive)
-        {
-            GameMenuManager.Instance.Register(this);
-        }
+        if(ReferenceManager.IsAlive)
+            ReferenceManager.Instance.GameMenuManager.Register(this);
 
         m_Button.onClick.AddListener(OnClick);
     }
@@ -45,16 +39,12 @@ public class GameMenuButton : MonoBehaviour
 #if !UNITY_EDITOR
     private void OnDisable()
     {
-        GameMenuManager.Instance.Remove(this);
+        ReferenceManager.Instance.GameMenuManager.Remove(this);
+
         m_Button.onClick.RemoveListener(OnClick);
     }
 #endif
 
-    private void OnClick()
-    {
-        if (onClicked == null)
-            Debug.Log("No one is subscribed");
-
-        onClicked?.Invoke(canvasToToggle);
-    }
+    private void OnClick() 
+        => onClicked?.Invoke(canvasToToggle);
 }

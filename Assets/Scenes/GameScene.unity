@@ -2626,6 +2626,7 @@ MonoBehaviour:
   resourcesManager: {fileID: 631774745}
   travelMananger: {fileID: 551986801}
   activitiesManager: {fileID: 356118148}
+  gameMenuManager: {fileID: 1192788895}
 --- !u!4 &1126953811
 Transform:
   m_ObjectHideFlags: 0

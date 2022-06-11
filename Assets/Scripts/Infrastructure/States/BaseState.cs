@@ -5,6 +5,5 @@ public abstract class BaseState : IState
     public abstract void ExitState();
     public abstract void CheckSwitchStates();
 
-    protected abstract void UpdateStates();
     protected abstract void SwitchState(IState newState);
 }

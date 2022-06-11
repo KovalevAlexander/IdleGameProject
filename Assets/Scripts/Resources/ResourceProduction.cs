@@ -6,7 +6,7 @@ public sealed class ResourceProduction : ResourceEffect
     public override bool CanApply()
     {
         foreach (var resourceType in GetResourceTypes())
-            if (ReferenceManager.Instance.RM.ResourceFilled(resourceType))
+            if (ReferenceManager.Instance.ResourcesManager.ResourceFilled(resourceType))
                 return false;
 
         return true;
@@ -14,9 +14,9 @@ public sealed class ResourceProduction : ResourceEffect
 
     public override void Apply()
     {
-        var scaled = ScaleEffectPerSecond(m_Resources);
+        var scaled = ScaleEffectPerSecond(affectedResources);
 
         foreach (var resourceType in GetResourceTypes())
-            ReferenceManager.Instance.RM.IncreaseResource(resourceType, scaled[resourceType]);
+            ReferenceManager.Instance.ResourcesManager.IncreaseResource(resourceType, scaled[resourceType]);
     }
 }

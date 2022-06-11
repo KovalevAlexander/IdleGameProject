@@ -1,6 +1,5 @@
-public class RepeatableActivity : Activity
+public sealed class RepeatableActivity : Activity
 {
-    public RepeatableActivity(ActivityData data) : base(data)
-    {
-    }
+    public RepeatableActivity(ActivityData data) 
+        : base(data) { }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 using TMPro;
 
-public class LocationRepresentation : ClickableRepresentation<Location>
+public sealed class LocationRepresentation : ClickableRepresentation<Location>
 {
     private TMP_Text m_Text;
 

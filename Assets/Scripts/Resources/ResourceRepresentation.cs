@@ -18,7 +18,7 @@ public sealed class ResourceRepresentation : TextRepresentation<Resource>
 
     public ResourceRepresentation(Resource representable, GameObject uiObject, string textFormat) : base(representable, uiObject, textFormat)
     {
-        m_TextFormat = "{0:0.##} / {1:0.##}";
+        m_TextFormat = "{0,-1:F2}/{1,1:0.##}";
 
         var refs = uiObject.GetComponent<ResourceRepresentationSlider>();
 
@@ -45,7 +45,9 @@ public sealed class ResourceRepresentation : TextRepresentation<Resource>
     {
         m_SB.Clear();
 
-       
+        m_Current = Mathf.Round(m_Current * 100.0f) * 0.01f;
+        m_Max = Mathf.Round(m_Max * 100.0f) * 0.01f;
+
         m_SB.AppendFormat(m_TextFormat, m_Current, m_Max);
 
         m_Counter.text = m_SB.ToString();

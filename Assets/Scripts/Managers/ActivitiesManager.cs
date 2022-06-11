@@ -6,7 +6,7 @@ using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Linq;
 
-public sealed class ActivitiesManager : Singleton<ActivitiesManager>
+public sealed class ActivitiesManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] ActivityRootsDictionary uiRoots = new();
@@ -21,8 +21,8 @@ public sealed class ActivitiesManager : Singleton<ActivitiesManager>
 
     private void Start()
     {
-        ReferenceManager.Instance.TM.onLocationChange = RegisterActivities;
-        ReferenceManager.Instance.RM.onResourcesUpdate = HandleResourceUpdate;
+        ReferenceManager.Instance.TravelManager.onLocationChange = RegisterActivities;
+        ReferenceManager.Instance.ResourcesManager.onResourcesUpdate = HandleResourceUpdate;
     }
 
     private void HandleResourceUpdate()

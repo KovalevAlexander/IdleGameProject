@@ -15,6 +15,11 @@ public sealed class ResourcesManager : MonoBehaviour
     [SerializeField] private Transform uiRoot;
 
     public Action onResourcesUpdate;
+    public bool ResourceHasMoreOrEqual(ResourceType type, float value)
+    => GetResource(type).Value >= value;
+
+    public bool ResourceFilled(ResourceType type)
+        => GetResource(type).isFull;
 
     private readonly Representer<Resource, ResourceRepresentation> m_Representer = new();
 
@@ -22,13 +27,6 @@ public sealed class ResourcesManager : MonoBehaviour
     {
         m_Representer.CreateRepresentations(Resources.Values.ToArray(), uiPrefab, uiRoot);
     }
-
-    private Resource GetResource(ResourceType type) => Resources[type];
-
-    public bool ResourceHasMoreOrEqual(ResourceType type, float value) => GetResource(type).Value >= value;
-
-    public bool ResourceFilled(ResourceType type) => Resources[type].isFull;
-
 
     public void IncreaseResource(ResourceType type, float value)
     {
@@ -42,7 +40,6 @@ public sealed class ResourcesManager : MonoBehaviour
         onResourcesUpdate?.Invoke();
     }
 
+    private Resource GetResource(ResourceType type) 
+        => Resources[type];
 }
-
-[System.Serializable]
-public class ResourcesDictionary : SerializableDictionaryBase<ResourceType, Resource> { }

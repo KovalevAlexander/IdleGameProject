@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Runtime.CompilerServices;
 
-public class ActivityActiveState : ActivityState
+public sealed class ActivityActiveState : ActivityState
 {
-    public ActivityActiveState(Activity context, ActivityStateFactory activityStateFactory) : base(context, activityStateFactory)
-    {
-    }
+    public ActivityActiveState(Activity context, ActivityStateFactory activityStateFactory) 
+        : base(context, activityStateFactory) { }
 
     public override void CheckSwitchStates()
     {
@@ -25,31 +22,23 @@ public class ActivityActiveState : ActivityState
         m_Context.onActivated?.Invoke();
     }
 
-    public override void EnterState()
-    {
-        m_Context.onActivated?.Invoke();
-    }
+    public override void EnterState() 
+        => m_Context.onActivated?.Invoke();
 
-    public override void ExitState()
-    {
-        m_Context.onStopped?.Invoke();
-    }
+    public override void ExitState() 
+        => m_Context.onStopped?.Invoke();
 
     public override void Run()
     {
+        ApplyEffects();
+
+        base.Run();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void ApplyEffects()
+    {
         m_Context.ActivityData.Requirements.Apply();
         m_Context.ActivityData.Production.Apply();
-
-        CheckSwitchStates();
-    }
-
-    public override void UpdateState()
-    {
-        CheckSwitchStates();
-    }
-
-    protected override void UpdateStates()
-    {
-        throw new System.NotImplementedException();
     }
 }

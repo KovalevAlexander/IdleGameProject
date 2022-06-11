@@ -1,13 +1,13 @@
 public sealed class ActionActivity : Activity
 {
-    public ActionActivity(ActivityData data) : base(data)
-    {
-    }
+    public ActionActivity(ActivityData data) 
+        : base(data) { }
 
     public override void Run()
     {
         base.Run();
 
-        ActivitiesManager.Instance.StopActivity(this);
+        //This will cause activity to exit active state on a next Run()
+        ReferenceManager.Instance.ActivitiesManager.StopActivity(this);
     }
 }

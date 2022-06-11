@@ -2,7 +2,7 @@ using UnityEngine;
 
 using TMPro;
 
-public class ActivityRepresentation : ClickableRepresentation<Activity>
+public sealed class ActivityRepresentation : ClickableRepresentation<Activity>
 {
     private readonly TMP_Text m_Text;
 

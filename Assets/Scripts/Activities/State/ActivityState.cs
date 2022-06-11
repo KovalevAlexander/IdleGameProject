@@ -18,5 +18,11 @@ public abstract class ActivityState : BaseState
         m_Context.State = (ActivityState)newState;
     }
 
-    public abstract void Run();
+    public virtual void Run()
+        => CheckSwitchStates();
+
+    public override void UpdateState()
+        => CheckSwitchStates();
+
+    public override void ExitState() { }
 }

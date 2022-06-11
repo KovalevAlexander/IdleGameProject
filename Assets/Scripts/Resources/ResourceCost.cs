@@ -5,10 +5,10 @@ public sealed class ResourceCost : ResourceEffect
 {
     public override bool CanApply()
     {
-        var scaled = ScaleEffectPerSecond(m_Resources);
+        var scaled = ScaleEffectPerSecond(affectedResources);
 
         foreach (var resourceType in GetResourceTypes())
-            if (!ReferenceManager.Instance.RM.ResourceHasMoreOrEqual(resourceType, scaled[resourceType]))
+            if (!ReferenceManager.Instance.ResourcesManager.ResourceHasMoreOrEqual(resourceType, scaled[resourceType]))
                 return false;
 
         return true;
@@ -16,9 +16,9 @@ public sealed class ResourceCost : ResourceEffect
 
     public override void Apply()
     {
-        var scaled = ScaleEffectPerSecond(m_Resources);
+        var scaled = ScaleEffectPerSecond(affectedResources);
         foreach (var resourceType in GetResourceTypes())
-            ReferenceManager.Instance.RM.DecreseResource(resourceType, scaled[resourceType]);
+            ReferenceManager.Instance.ResourcesManager.DecreseResource(resourceType, scaled[resourceType]);
     }
 }
 

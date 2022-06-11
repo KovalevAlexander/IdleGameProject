@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class Representer<T, K> where T : IRepresentable
-                               where K : IRepresentation
+public sealed class Representer<T, K>   where T : IRepresentable
+                                        where K : IRepresentation
 {
-    protected List<K> m_Representations = new();
+    private List<K> m_Representations = new();
 
     public void CreateRepresentations(T[] representables, GameObject uiPrefab, Transform[] uiRoots)
     {
@@ -31,7 +31,7 @@ public class Representer<T, K> where T : IRepresentable
         m_Representations.Add(representation);
     }
 
-    public virtual void Clear()
+    public void Clear()
     {
         foreach (var representation in m_Representations)
             representation.Dispose();

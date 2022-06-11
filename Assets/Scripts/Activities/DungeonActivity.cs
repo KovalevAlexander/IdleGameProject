@@ -1,6 +1,5 @@
-public class DungeonActivity : Activity
+public sealed class DungeonActivity : Activity
 {
-    public DungeonActivity(ActivityData data) : base(data)
-    {
-    }
+    public DungeonActivity(ActivityData data) 
+        : base(data) { }
 }

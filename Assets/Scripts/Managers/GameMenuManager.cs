@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public sealed class GameMenuManager : Singleton<GameMenuManager>
+public sealed class GameMenuManager : MonoBehaviour
 {
     [SerializeField] private Canvas defaultMenu;
     [SerializeField] private List<Canvas> menuList;

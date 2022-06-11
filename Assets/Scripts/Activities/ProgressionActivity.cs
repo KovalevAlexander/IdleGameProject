@@ -1,6 +1,5 @@
-public class ProgressionActivity : Activity
+public sealed class ProgressionActivity : Activity
 {
-    public ProgressionActivity(ActivityData data) : base(data)
-    {
-    }
+    public ProgressionActivity(ActivityData data) 
+        : base(data) { }
 }

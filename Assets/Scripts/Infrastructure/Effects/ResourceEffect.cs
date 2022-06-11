@@ -7,16 +7,9 @@ public abstract class ResourceEffect : Effect
     [SerializeField] protected bool perSecond;
     [SerializeField] protected ResourceDictionary affectedResources;
 
-    protected ResourceDictionary m_Resources;
+    public float this[ResourceType type] => affectedResources[type];
 
-    private void Awake()
-    {
-        m_Resources = affectedResources;
-    }
-
-    public float this[ResourceType type] => m_Resources[type];
-
-    protected ICollection<ResourceType> GetResourceTypes() => m_Resources.Keys;
+    protected ICollection<ResourceType> GetResourceTypes() => affectedResources.Keys;
 
     protected ResourceDictionary ScaleEffectPerSecond(ResourceDictionary dictionary)
     {
@@ -25,6 +18,6 @@ public abstract class ResourceEffect : Effect
             var scaledDictionary = dictionary.Scale(Time.deltaTime);
             return scaledDictionary;
         }
-        return m_Resources;
+        return affectedResources;
     }
 }

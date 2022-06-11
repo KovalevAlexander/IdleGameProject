@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Activities/Activity Data")]
-public class ActivityData : ScriptableObject
+public sealed class ActivityData : ScriptableObject
 {
     [Header("General")]
     [SerializeField] private string activityName;

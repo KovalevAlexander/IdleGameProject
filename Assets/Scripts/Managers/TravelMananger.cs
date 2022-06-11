@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public sealed class TravelMananger : Singleton<TravelMananger>
+public sealed class TravelMananger : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private Location defaultLocation;
