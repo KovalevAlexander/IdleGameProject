@@ -896,6 +896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 356118147}
   - component: {fileID: 356118148}
+  - component: {fileID: 356118149}
   m_Layer: 0
   m_Name: ActivitiesManager
   m_TagString: Untagged
@@ -962,6 +963,18 @@ MonoBehaviour:
     - {fileID: 1900799094}
   uiPrefab: {fileID: 5662163633447048079, guid: 965a6bcf6b66c66428104bc28135b2ea,
     type: 3}
+--- !u!114 &356118149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356118146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbcef0e3fcff6b144adc39e4ad943356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &438207693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,6 +2639,7 @@ MonoBehaviour:
   resourcesManager: {fileID: 631774745}
   travelMananger: {fileID: 551986801}
   activitiesManager: {fileID: 356118148}
+  activitiesUnlockManager: {fileID: 356118149}
   gameMenuManager: {fileID: 1192788895}
 --- !u!4 &1126953811
 Transform:
@@ -4185,7 +4199,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 194, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1962043127
 MonoBehaviour:
   m_ObjectHideFlags: 0

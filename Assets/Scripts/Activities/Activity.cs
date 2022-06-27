@@ -42,10 +42,60 @@ public abstract class Activity : IRepresentable, IDisposable
     {
         m_Data = data;
 
+        if(!m_Data.InitiallyUnlocked)
+            ReferenceManager.Instance.UnlockManager.LockActivity(this);
+
         m_States = new ActivityStateFactory(this);
         m_CurrentState = m_States.Initial();
         m_CurrentState.EnterState();
     }
+
+    public static bool operator ==(Activity x, Activity y)
+    {
+        if (x is null)
+        {
+            if (y is null)
+            {
+                return true;
+            }
+
+            // Only the left side is null.
+            return false;
+        }
+        // Equals handles case of null on right side.
+        return x.Equals(y);
+    }
+
+    public static bool operator !=(Activity x, Activity y) => !(x == y);
+
+    public bool Equals(Activity activity)
+    {
+        if (activity is null)
+        {
+            return false;
+        }
+
+        // Optimization for a common success case.
+        if (Object.ReferenceEquals(this, activity))
+        {
+            return true;
+        }
+
+        // If run-time types are not exactly the same, return false.
+        if (this.GetType() != activity.GetType())
+        {
+            return false;
+        }
+
+        // Return true if the fields match.
+        // Note that the base class is not invoked because it is
+        // System.Object, which defines Equals as reference equality.
+        return this.ActivityData == activity.ActivityData;
+    }
+
+    public override bool Equals(object obj) => this.Equals(obj as Activity);
+
+    public override int GetHashCode() => (ActivityData).GetHashCode();
 
     public void Update() 
         => m_CurrentState.UpdateState();
@@ -56,8 +106,6 @@ public abstract class Activity : IRepresentable, IDisposable
     //Activity Data reference is left untouched so it can be re-used
     public void Dispose()
     {
-        m_Representation = null;
-
         onActivated = null;
         onStopped = null;
         onUnavailable = null;

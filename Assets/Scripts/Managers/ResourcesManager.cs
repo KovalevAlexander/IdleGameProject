@@ -3,15 +3,18 @@ using System.Linq;
 
 using UnityEngine;
 
-using RotaryHeart.Lib.SerializableDictionary;
-using UnityEngine.Events;
-
 public sealed class ResourcesManager : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private ResourcesDictionary Resources = new();
     [Header("UI")]
     [SerializeField] private GameObject uiPrefab;
+
+    public void IncreaseResourceCap(ResourceType resourceType, float value)
+    {
+        GetResource(resourceType).Maximum += value;
+    }
+
     [SerializeField] private Transform uiRoot;
 
     public Action onResourcesUpdate;

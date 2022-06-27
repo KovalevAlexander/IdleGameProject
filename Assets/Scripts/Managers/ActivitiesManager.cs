@@ -33,10 +33,15 @@ public sealed class ActivitiesManager : MonoBehaviour
 
     private void Update()
     {
+        RunActiveActivities();
+    }
+
+    private void RunActiveActivities()
+    {
         var activities = m_ActiveActivities.ToList();
         activities.RemoveAll(activity => activity == null);
 
-        for (int i = activities.Count-1; i >= 0; i--)
+        for (int i = activities.Count - 1; i >= 0; i--)
         {
             activities[i].Run();
         }
@@ -53,13 +58,17 @@ public sealed class ActivitiesManager : MonoBehaviour
                 m_Activities.Add(activity);
         }
 
-        //Replacing activities with the matching old ones.
+        //Filter locked activities
+        m_Activities = m_Activities.Where((activity) 
+            => ReferenceManager.Instance.UnlockManager.IsUnlocked(activity)).ToList();
+
+        //Replacing active activities with the matching old ones to preserve their state.
         foreach(var activeActivity in m_ActiveActivities)
         {
             if (m_Activities.Where(activity => 
-            activity.ActivityData == activeActivity.ActivityData).Count() > 0)
+            activity == activeActivity).Count() > 0)
             {
-                m_Activities.RemoveAll(activity => activity.ActivityData == activeActivity.ActivityData);
+                m_Activities.RemoveAll(activity => activity == activeActivity);
                 m_Activities.Add(activeActivity);
             }
 
@@ -82,7 +91,7 @@ public sealed class ActivitiesManager : MonoBehaviour
     private void ClearActivities()
     {
         foreach (var activity in m_Activities)
-            activity.Dispose();
+            RemoveActivity(activity);
 
         var nonPersistentActivities = m_ActiveActivities.Where(activity => !activity.IsAvailable).ToList();
 
@@ -95,9 +104,15 @@ public sealed class ActivitiesManager : MonoBehaviour
         m_Representer.Clear();
     }
 
-    private void SavePersistentActivities()
+    public void RemoveActivity(Activity activity)
     {
-    }
+        StopActivity(activity);
+
+        activity.Dispose();
+
+        m_ActiveActivities.Remove(activity);
+        m_Representer.RemoveRepresentation(activity);
+    } 
 
     private Transform[] ResolveRoots()
     {

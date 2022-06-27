@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 
 public sealed class Representer<T, K>   where T : IRepresentable
@@ -42,5 +43,18 @@ public sealed class Representer<T, K>   where T : IRepresentable
     public List<K> GetRepresentations()
     {
         return m_Representations;
+    }
+
+    public void RemoveRepresentation(T representable)
+    {
+        var representationToRemove = m_Representations.Find(representation 
+            => (IRepresentation)representation == representable.Representation);
+        
+        if (representationToRemove == null)
+            return;
+
+        representationToRemove.Dispose();
+
+        m_Representations.Remove(representationToRemove);
     }
 }

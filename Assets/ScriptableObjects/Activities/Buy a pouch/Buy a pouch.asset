@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbc775da0b44b714196523147858897a, type: 3}
-  m_Name: Break Sweat
+  m_Name: Buy a pouch
   m_EditorClassIdentifier: 
-  activityName: Break sweat
-  activityType: 0
+  activityName: Buy a pouch
+  activityType: 2
   initiallyUnlocked: 1
-  requirements: {fileID: 11400000, guid: e30a41534deab124fb37bd2bdf01368b, type: 2}
-  production: {fileID: 11400000, guid: d118eb8ffdd7c414d8f4991f1bbaa91e, type: 2}
+  requirements: {fileID: 11400000, guid: 9ca4b874da9d44548ae4a3572d2fc3c0, type: 2}
+  production: {fileID: 11400000, guid: a12a877429939d244be0178c27f7f287, type: 2}
   colorData: {fileID: 11400000, guid: 8480f909b6dd09647921f90392f765d4, type: 2}

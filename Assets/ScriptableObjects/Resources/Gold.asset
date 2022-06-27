@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   m_Type: 1
-  initialMaxValue: 50
-  initialValue: 0
+  initialMaxValue: 10
+  initialValue: 10
   m_ColorData: {fileID: 11400000, guid: 13ac3f2a98459434aa86c62b4db23291, type: 2}
