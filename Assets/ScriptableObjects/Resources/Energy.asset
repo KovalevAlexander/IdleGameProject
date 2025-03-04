@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c6d75dee5b7314fa44245503ce8103, type: 3}
   m_Name: Energy
   m_EditorClassIdentifier: 
-  m_Type: 0
+  type: 0
   initialMaxValue: 10
   initialValue: 0
-  m_ColorData: {fileID: 11400000, guid: d6ca5748595b07d41886884d80e04b38, type: 2}
+  colorData: {fileID: 11400000, guid: d6ca5748595b07d41886884d80e04b38, type: 2}

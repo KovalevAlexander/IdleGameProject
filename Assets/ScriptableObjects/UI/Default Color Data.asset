@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Default Color Data
   m_EditorClassIdentifier: 
   defaultCollor: {r: 1, g: 1, b: 1, a: 1}
-  activatedColor: {r: 1, g: 0.37875608, b: 0.24056602, a: 1}
+  activatedColor: {r: 0.23921567, g: 1, b: 0.30555183, a: 1}
   disabledColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 0.5568628}

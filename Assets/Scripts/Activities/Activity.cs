@@ -35,7 +35,7 @@ public abstract class Activity : IRepresentable, IDisposable
     protected ActivityState m_CurrentState;
     protected ActivityStateFactory m_States;
 
-    protected ActivityData m_Data;
+    protected readonly ActivityData m_Data;
     protected ActivityRepresentation m_Representation;
 
     public Activity(ActivityData data)

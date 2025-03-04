@@ -5,13 +5,13 @@ using UnityEngine;
 public class Resource : ScriptableObject, IRepresentable
 {
     [Header("General")]
-    [SerializeField] private ResourceType m_Type;
+    [SerializeField] protected ResourceType type;
 
     [SerializeField] private float initialMaxValue;
     [SerializeField] private float initialValue;
 
     [Header("UI")]
-    [SerializeField] private RepresentationColorData m_ColorData;
+    [SerializeField] private RepresentationColorData colorData;
 
     public Action<float> onValueChanged;
     public Action<float> onMaxChanged;
@@ -29,7 +29,7 @@ public class Resource : ScriptableObject, IRepresentable
 
     public ResourceType Type
     {
-        get { return m_Type; }
+        get { return type; }
     }
     public string Name => Type.ToString();
 
@@ -66,7 +66,7 @@ public class Resource : ScriptableObject, IRepresentable
         set => m_Representation = value as ResourceRepresentation; 
     }
 
-    public RepresentationColorData ColorData => m_ColorData;
+    public RepresentationColorData ColorData => colorData;
 
     public void Add(float value)
     {
